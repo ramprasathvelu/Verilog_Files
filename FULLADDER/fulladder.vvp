@@ -1,0 +1,87 @@
+#! /usr/bin/vvp -v
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x57cd2ae9e680 .scope module, "testbench" "testbench" 2 1;
+ .timescale 0 0;
+v0x57cd2aeeb670_0 .var "a", 0 0;
+v0x57cd2aeeb730_0 .var "b", 0 0;
+v0x57cd2aeeb7d0_0 .net "c", 0 0, v0x57cd2aeeb360_0;  1 drivers
+v0x57cd2aeeb8d0_0 .var "cin", 0 0;
+v0x57cd2aeeb9a0_0 .net "s", 0 0, v0x57cd2aeeb4c0_0;  1 drivers
+S_0x57cd2ae9e810 .scope module, "dut" "fulladder" 2 4, 3 1 0, S_0x57cd2ae9e680;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "s";
+    .port_info 1 /OUTPUT 1 "c";
+    .port_info 2 /INPUT 1 "a";
+    .port_info 3 /INPUT 1 "b";
+    .port_info 4 /INPUT 1 "cin";
+v0x57cd2ae9ea10_0 .net "a", 0 0, v0x57cd2aeeb670_0;  1 drivers
+v0x57cd2aeeb2a0_0 .net "b", 0 0, v0x57cd2aeeb730_0;  1 drivers
+v0x57cd2aeeb360_0 .var "c", 0 0;
+v0x57cd2aeeb400_0 .net "cin", 0 0, v0x57cd2aeeb8d0_0;  1 drivers
+v0x57cd2aeeb4c0_0 .var "s", 0 0;
+E_0x57cd2aeda070 .event anyedge, v0x57cd2ae9ea10_0, v0x57cd2aeeb2a0_0, v0x57cd2aeeb400_0;
+    .scope S_0x57cd2ae9e810;
+T_0 ;
+    %wait E_0x57cd2aeda070;
+    %load/vec4 v0x57cd2ae9ea10_0;
+    %load/vec4 v0x57cd2aeeb2a0_0;
+    %xor;
+    %load/vec4 v0x57cd2aeeb400_0;
+    %xor;
+    %store/vec4 v0x57cd2aeeb4c0_0, 0, 1;
+    %load/vec4 v0x57cd2ae9ea10_0;
+    %load/vec4 v0x57cd2aeeb2a0_0;
+    %and;
+    %flag_set/vec4 8;
+    %jmp/1 T_0.1, 8;
+    %load/vec4 v0x57cd2aeeb2a0_0;
+    %load/vec4 v0x57cd2aeeb400_0;
+    %and;
+    %flag_set/vec4 9;
+    %flag_or 8, 9;
+T_0.1;
+    %flag_get/vec4 8;
+    %jmp/1 T_0.0, 8;
+    %load/vec4 v0x57cd2aeeb400_0;
+    %load/vec4 v0x57cd2ae9ea10_0;
+    %and;
+    %or;
+T_0.0;
+    %store/vec4 v0x57cd2aeeb360_0, 0, 1;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0x57cd2ae9e680;
+T_1 ;
+    %vpi_call 2 7 "$monitor", "time=%d \011 a=%b \011 b=%b \011 cin=%b \011 s=%b \011 c=%b ", $time, v0x57cd2aeeb670_0, v0x57cd2aeeb730_0, v0x57cd2aeeb8d0_0, v0x57cd2aeeb9a0_0, v0x57cd2aeeb7d0_0 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x57cd2aeeb670_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x57cd2aeeb730_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x57cd2aeeb8d0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x57cd2aeeb670_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x57cd2aeeb730_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x57cd2aeeb8d0_0, 0, 1;
+    %delay 10, 0;
+    %vpi_call 2 14 "$stop" {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "fulladder_tb.v";
+    "fulladder.v";
